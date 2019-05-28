@@ -7,9 +7,13 @@
     <meta http-equiv="Content-Security-Policy" content="default-src *;
    img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
    style-src  'self' 'unsafe-inline' *">
+
     <title>Leaflet</title>
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    
     <style>
+
         body {
             font-family: sans-serif;
             margin: 0;
@@ -31,7 +35,7 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
-  
+
 
     <script>
         // create Leaflet map
@@ -50,7 +54,7 @@
         //in order for this to work you have to create a layer group
         //create empty group
         var group = L.layerGroup()
-        
+
         //add empty group to map
         group.addTo(map);
 
@@ -64,7 +68,7 @@
 
 
         map.on('zoom', function () {
-            
+
             if (map.getZoom() >= 12 && map.hasLayer(group)) {
 
                 map.removeLayer(group);
@@ -75,6 +79,11 @@
             }
         })
 
+        circle.on('click', function(d){
+            map.flyTo([21.44, -157.9], 13, {
+                duration: 0.2
+            });
+        })
     </script>
 </body>
 
