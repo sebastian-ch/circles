@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <script>
+        // create Leaflet map
+        var map = L.map('map', {
+            zoomSnap: .2,
+            zoomControl: false,
+            center: [21.452, -157.958],
+            zoom: 8
+        });
+        //basemap
+        L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy;<a href="https://carto.com/attribution">CARTO</a>'
+        }).addTo(map);
+
+        //in order for this to work you have to create a layer group
+        //create empty group
+        var group = L.layerGroup()
+        
+        //add empty group to map
+        group.addTo(map);
+
+        //create circle, notice i don't add it to the map
+        var circle = L.circle([21.44, -157.9], {
+            radius: 4000
+        }).bindPopup('yooooo');
+
+        //add circle to the group
+        group.addLayer(circle);
+
+
+        map.on('zoom', function () {
+            
+            if (map.getZoom() >= 12 && map.hasLayer(group)) {
+
+                map.removeLayer(group);
+
+            } else if (map.getZoom() < 12 && map.hasLayer(group) == false) {
+
+                map.addLayer(group);
+            }
+        })
+
+    </script>
+</body>
+
+</html>
